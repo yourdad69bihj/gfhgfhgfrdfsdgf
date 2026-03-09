@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel="manifest" href="manifest.json">
+    <title>VULCAN | 9.9M INJECTOR</title>
+    <style>
+        :root { --neon: #00f2ea; --bg: #0b0c10; --panel: rgba(15, 15, 15, 0.95); }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        /* Mod Menu Style */
+        #mod-panel { border: 2px solid var(--neon); padding: 30px; border-radius: 12px; background: var(--panel); text-align: center; box-shadow: 0 0 25px var(--neon); width: 80%; }
+        .inject-btn { 
+            background: #000; border: 1px solid var(--neon); color: var(--neon); 
+            padding: 15px 25px; font-size: 16px; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 10px var(--neon); margin-top: 20px; transition: 0.3s;
+        }
+        .inject-btn:active { background: var(--neon); color: #000; }
+        
+        #console { background: #000; color: #00ff00; font-size: 10px; height: 100px; width: 100%; margin-top: 20px; padding: 5px; text-align: left; overflow-y: auto; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+    <div id="mod-panel">
+        <div style="font-size: 12px; color: var(--neon); margin-bottom: 15px;">VULCAN DATA INJECTOR v5.0</div>
+        <div style="font-size: 24px; font-weight: bold;">[ 9,999,999 ]</div>
+        <button class="inject-btn" onclick="startInjection()">INJECT PAYLOAD</button>
+        <div id="console">> SYSTEM READY...</div>
+    </div>
+
+    <script>
+        const KEY = "key67"; //
+        const consoleEl = document.getElementById('console');
+
+        function log(msg) {
+            consoleEl.innerHTML += `<div>> ${msg}</div>`;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        async function startInjection() {
+            log("INITIALIZING BRIDGE...");
+            log("VERIFYING KEY: " + KEY);
+            
+            try {
+                // Requesting permission to access the phone's storage
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: 'save_data.johnson',
+                    types: [{ description: 'Vulcan Script', accept: {'text/plain': ['.johnson']} }]
+                });
+
+                log("CONNECTION ESTABLISHED.");
+                log("BYPASSING SECURITY...");
+
+                const writable = await handle.createWritable();
+                const payload = {
+                    "header": { "auth": KEY, "status": "HACKED" },
+                    "stats": { "score": 9999999, "unlocked": true }
+                };
+
+                await writable.write(JSON.stringify(payload));
+                await writable.close();
+
+                log("SUCCESS: 9,999,999 INJECTED.");
+                alert("PAYLOAD DELIVERED. LOAD THE FILE IN YOUR GAME.");
+            } catch (err) {
+                log("ERROR: INJECTION CANCELLED.");
+            }
+        }
+    </script>
+</body>
+</html>
